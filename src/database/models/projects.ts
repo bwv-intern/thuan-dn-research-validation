@@ -2,7 +2,7 @@ import { Model, DataTypes } from 'sequelize';
 import connection from '../connection';
 
 interface ProjectAttributes {
-  id: number;
+  id?: number;
   projectName: string;
   projectDescription: string;
   status: string;
@@ -16,15 +16,15 @@ interface ProjectAttributes {
 }
 
 class Project extends Model<ProjectAttributes> implements ProjectAttributes {
-  public id!: number;
+  public id?: number;
   public projectName!: string;
   public projectDescription!: string;
   public status!: string;
-  public clientCompany: number;
-  public projectLeader: number;
-  public estimatedBudget: number;
-  public totalAmountSpent: number;
-  public estimatedProjectDuration: number;
+  public clientCompany!: number;
+  public projectLeader!: number;
+  public estimatedBudget!: number;
+  public totalAmountSpent!: number;
+  public estimatedProjectDuration!: number;
   public readonly updatedAt!: Date;
   public readonly createdAt!: Date;
 }

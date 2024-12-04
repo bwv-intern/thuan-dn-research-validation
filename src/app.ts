@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express';
 import connection, { connectDB } from './database/connection';
 import User from './database/models/users';
 import Project from './database/models/projects';
+import { createUser } from './controllers/userController';
 
 const app = express();
 const port = 3000;
@@ -22,8 +23,6 @@ app.post('/login-account', async (req: Request, res: Response) => {
     let user = await User.findOne({
       where: { email: req.body.email, password: req.body.password }
     })
-    console.log("Check user: ", user);
-
     if (user) {
       return res.status(200).redirect('/project');
     } else {
@@ -39,19 +38,20 @@ app.get('/register', (req: Request, res: Response) => {
   res.render('register');
 });
 
-app.post('/register', async (req: Request, res: Response) => {
-  // Access the submitted form data using req.body
-  const { fullName, email, password, retypePassword, isAgreeTerms } = req.body;
-  if (isAgreeTerms && password === retypePassword) {
-    try {
-      await User.create({ email: email, password: password, fullName: fullName });
-      return res.status(201).redirect('/login');
-    } catch (err) {
-      return res.send(err.message);
-    }
-  }
-  return res.send(`Can't create new user.`);
-});
+// app.post('/register', async (req: Request, res: Response) => {
+//   const { fullName, email, password, retypePassword, isAgreeTerms } = req.body;
+//   if (isAgreeTerms && password === retypePassword) {
+//     try {
+//       await User.create({ email: email, password: password, fullName: fullName });
+//       return res.status(201).redirect('/login');
+//     } catch (err) {
+//       return res.send("Can't register");
+//     }
+//   }
+//   return res.send(`Can't create new user.`);
+// });
+
+app.post('/register', createUser)
 
 app.get('/project', (req, res) => {
   res.render('project-add');

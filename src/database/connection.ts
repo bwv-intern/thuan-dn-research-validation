@@ -2,7 +2,8 @@ import { Sequelize } from 'sequelize'
 
 const sequelizeConnection = new Sequelize('mini_project_db', 'root', '0905093245Asd0', {
   host: 'localhost',
-  dialect: 'mysql'
+  dialect: 'mysql',
+  logging: false
 });
 
 export const connectDB = async (): Promise<void> => {
